@@ -57,3 +57,9 @@ stages:
         tags: |
           $(tag)
           latest
+
+    - task: AzureWebAppContainer@1
+      inputs:
+        azureSubscription: 'Francis Lacroix - External'
+        appName: 'openwebui'
+        multicontainerConfigFile: 'open-webui-pipelines-compose.yml'
