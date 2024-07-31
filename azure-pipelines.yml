@@ -2,15 +2,23 @@ trigger:
 - main
 
 resources:
-- repo: self
+  repositories:
+  - repository: openWebUIRepo
+    type: github
+    endpoint: 'francislacroix (1)'
+    name: francislacroix/open-webui
+  - repository: openWebUIPipelinesRepo
+    type: github
+    endpoint: 'francislacroix (1)'
+    name: francislacroix/open-webui-pipelines
 
 variables:
   dockerRegistryServiceConnection: 'flcanchatacr' #'2c72e897-d1bb-405e-bd59-5935ee6868b6'
   containerRegistry: 'flcanchatacr.azurecr.io'
   openWebUIImageRepository: 'francislacroixopenwebui'
   openWebIUPipelinesImageRepository: 'francislacroixopenwebuipipelines'
-  openWebUIDockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  openWebUIPipelinesDockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  openWebUIDockerfilePath: '$(Build.SourcesDirectory)/openWebUIRepo/Dockerfile'
+  openWebUIPipelinesDockerfilePath: '$(Build.SourcesDirectory)/openWebUIPipelinesRepo/Dockerfile'
   tag: '$(Build.BuildId)'
 
   vmImageName: 'ubuntu-latest'
@@ -24,12 +32,28 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - checkout: self
+    - checkout: openWebUIRepo
+    - checkout: openWebUIPipelinesRepo
+
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build and push the Open-WebUI image
       inputs:
         command: buildAndPush
         repository: $(openWebUIImageRepository)
-        dockerfile: $(dockerfilePath)
+        dockerfile: $(openWebUIDockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+          latest
+
+    - task: Docker@2
+      displayName: Build and push the Open-WebUI Pipelines image
+      inputs:
+        command: buildAndPush
+        repository: $(openWebIUPipelinesImageRepository)
+        dockerfile: $(openWebUIPipelinesDockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          latest
