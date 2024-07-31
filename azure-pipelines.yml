@@ -19,6 +19,7 @@ variables:
   openWebIUPipelinesImageRepository: 'francislacroixopenwebuipipelines'
   openWebUIDockerfilePath: '$(Build.SourcesDirectory)/open-webui/Dockerfile'
   openWebUIPipelinesDockerfilePath: '$(Build.SourcesDirectory)/open-webui-pipelines/Dockerfile'
+  dockerComposeFile: '$(Build.SourcesDirectory)/open-webui/open-webui-pipelines-compose.yml'
   tag: '$(Build.BuildId)'
 
   vmImageName: 'ubuntu-latest'
@@ -62,4 +63,4 @@ stages:
       inputs:
         azureSubscription: 'Francis Lacroix - External'
         appName: 'openwebui'
-        multicontainerConfigFile: 'open-webui-pipelines-compose.yml'
+        multicontainerConfigFile: $(dockerComposeFile)
