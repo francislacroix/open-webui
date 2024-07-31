@@ -1,0 +1,17 @@
+services:
+  open-webui:
+    image: flcanchatacr.azurecr.io/francislacroixopenwebui:latest
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    environment:
+      - OPENAI_API_BASE_URL=http://localhost:9099
+      - OPENAI_API_KEY=0p3n-w3bu!
+  
+  open-webui-pipelines:
+    image: flcanchatacr.azurecr.io/francislacroixopenwebui:latest
+    ports:
+      - 9099:9099
+    expose:
+      - 9099
