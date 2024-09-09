@@ -37,27 +37,27 @@ stages:
     - checkout: open-webui
     - checkout: open-webui-pipelines
 
-    # - task: Docker@2
-    #   displayName: Build and push the Open-WebUI image
-    #   inputs:
-    #     command: buildAndPush
-    #     repository: $(openWebUIImageRepository)
-    #     dockerfile: $(openWebUIDockerfilePath)
-    #     containerRegistry: $(dockerRegistryServiceConnection)
-    #     tags: |
-    #       $(tag)
-    #       latest
+    - task: Docker@2
+      displayName: Build and push the Open-WebUI image
+      inputs:
+        command: buildAndPush
+        repository: $(openWebUIImageRepository)
+        dockerfile: $(openWebUIDockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          latest
 
-    # - task: Docker@2
-    #   displayName: Build and push the Open-WebUI Pipelines image
-    #   inputs:
-    #     command: buildAndPush
-    #     repository: $(openWebIUPipelinesImageRepository)
-    #     dockerfile: $(openWebUIPipelinesDockerfilePath)
-    #     containerRegistry: $(dockerRegistryServiceConnection)
-    #     tags: |
-    #       $(tag)
-    #       latest
+    - task: Docker@2
+      displayName: Build and push the Open-WebUI Pipelines image
+      inputs:
+        command: buildAndPush
+        repository: $(openWebIUPipelinesImageRepository)
+        dockerfile: $(openWebUIPipelinesDockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          latest
 
     - task: AzureWebAppContainer@1
       inputs:
