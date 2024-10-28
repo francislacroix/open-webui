@@ -13,10 +13,10 @@ resources:
     name: francislacroix/open-webui-pipelines
 
 variables:
-  dockerRegistryServiceConnection: 'flcanchatacr' #'2c72e897-d1bb-405e-bd59-5935ee6868b6'
-  containerRegistry: 'flcanchatacr.azurecr.io'
-  openWebUIImageRepository: 'francislacroixopenwebui'
-  openWebIUPipelinesImageRepository: 'francislacroixopenwebuipipelines'
+  dockerRegistryServiceConnection: 'ACR flacr Connection' #'2c72e897-d1bb-405e-bd59-5935ee6868b6'
+  containerRegistry: 'flacr.azurecr.io'
+  openWebUIImageRepository: 'openwebui'
+  openWebIUPipelinesImageRepository: 'openwebuipipelines'
   openWebUIDockerfilePath: '$(Build.SourcesDirectory)/open-webui/Dockerfile'
   openWebUIPipelinesDockerfilePath: '$(Build.SourcesDirectory)/open-webui-pipelines/Dockerfile'
   dockerComposeFile: '$(Build.SourcesDirectory)/open-webui/open-webui-pipelines-compose.yml'
@@ -59,10 +59,10 @@ stages:
           $(tag)
           latest
 
-    - task: AzureWebAppContainer@1
-      inputs:
-        azureSubscription: 'Francis Lacroix - External'
-        appName: 'openwebui'
-        containers: |
-          '$(openWebUIImageRepository):latest'
-          '$(openWebIUPipelinesImageRepository):latest'
+    # - task: AzureWebAppContainer@1
+    #   inputs:
+    #     azureSubscription: 'Francis Lacroix - External'
+    #     appName: 'openwebui'
+    #     containers: |
+    #       '$(openWebUIImageRepository):latest'
+    #       '$(openWebIUPipelinesImageRepository):latest'
